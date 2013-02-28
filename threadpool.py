@@ -41,10 +41,9 @@ class ThreadPool:
 	def stopPool(self):
 		for _thread in self.pool:
 			_thread.stop()
-			_thread.join()
 	
-	def putTask(self, func, argv):
-		self.taskQueue.put((func, argv))
+	def putTask(self, func, **kwargs):
+		self.taskQueue.put((func, kwargs))
 
 	def getTask(self):
 		pass
