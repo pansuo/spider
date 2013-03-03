@@ -17,7 +17,9 @@ class Worker(Thread):
 			if not self.state:
 				break
 			try:
-				func, argv = self.taskQueue.get()
+				# XXX
+				# 看文档的get,默认会一直等待
+				func, argv = self.taskQueue.get(False)
 				func(argv)
 				self.taskQueue.task_done()
 			except Empty:
@@ -50,4 +52,3 @@ class ThreadPool:
 
 	def taskJoin(self):
 		self.taskQueue.join()
-

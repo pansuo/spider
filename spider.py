@@ -66,12 +66,8 @@ class Spider:
 			except:
 				print 'unknown error'
 			
-			if currentLevel < self.depth:
-				pass
-			elif currentLevel == self.depth:
+			if currentLevel >= self.depth:
 				return
-			else:
-				pass	# TODO ERROR
 
 			for url in parser.urls:
 				# TODO
@@ -79,6 +75,9 @@ class Spider:
 					self.threadPool.putTask(self.crawlPage, \
 							currentLevel = currentLevel+1, \
 							url = url)
+	
+	def waitComplete(self):
+		self.threadPool.taskJoin()
 
 	def stop(self):
 		self.threadPool.stopPool()
@@ -86,4 +85,5 @@ class Spider:
 if __name__ == '__main__':
 	spider = Spider()
 	spider.start(1, url)
+	spider.waitComplete()
 	spider.stop()
